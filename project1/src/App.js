@@ -1,5 +1,7 @@
  import React from "react";
  import * as Components from './component/Components';
+ import { login } from "./component/login";
+ import {register} from "./component/register";
 
  function App() {
      const [signIn, toggle] = React.useState(true);
