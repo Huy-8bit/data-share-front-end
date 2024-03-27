@@ -1,31 +1,50 @@
- import React from "react";
+ import React, { useState } from "react";
  import * as Components from './component/Components';
  import { login } from "./component/login";
  import {register} from "./component/register";
 
  function App() {
-     const [signIn, toggle] = React.useState(true);
+        const [signIn, toggle] = React.useState(true);
+
+        const [username, setUsername] = useState('');
+        const [email, setEmail] = useState('');
+        const [password, setPassword] = useState('');
+        //
+        const loginAccount = async (event) => {
+            event.preventDefault();
+            console.log(username + ' '+password);
+            const data = await login(username, password);
+        };
+        //
+        const registerAccount = async (event) => {
+            event.preventDefault();
+            const data = await register(username, email, password);
+        };
+        //
+       
       return(
           <Components.Container>
+            <Components.SignInContainer signinIn={signIn}>
+                   <Components.Form onSubmit={loginAccount}>
+                       <Components.Title>Sign in</Components.Title>
+                       <Components.Input type='text' placeholder='Username' onChange={e => setUsername(e.target.value)}/>
+                       <Components.Input type='password' placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                       <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
+                       <Components.Button type="submit">Sigin In</Components.Button>
+                   </Components.Form>
+              </Components.SignInContainer>
+
               <Components.SignUpContainer signinIn={signIn}>
-                  <Components.Form>
+                  <Components.Form onSubmit={registerAccount}>
                       <Components.Title>Create Account</Components.Title>
-                      <Components.Input type='text' placeholder='Name' />
-                      <Components.Input type='email' placeholder='Email' />
-                      <Components.Input type='password' placeholder='Password' />
-                      <Components.Button>Sign Up</Components.Button>
+                      <Components.Input type='text' placeholder='Username'  onChange={e => setUsername(e.target.value)}/>
+                      <Components.Input type='email' placeholder='Email'  onChange={e => setEmail(e.target.value)}/>
+                      <Components.Input type='password' placeholder='Password' onChange={e => setPassword(e.target.value)}/>
+                      <Components.Button type="submit">Sign Up</Components.Button>
                   </Components.Form>
               </Components.SignUpContainer>
 
-              <Components.SignInContainer signinIn={signIn}>
-                   <Components.Form>
-                       <Components.Title>Sign in</Components.Title>
-                       <Components.Input type='email' placeholder='Email' />
-                       <Components.Input type='password' placeholder='Password' />
-                       <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
-                       <Components.Button>Sigin In</Components.Button>
-                   </Components.Form>
-              </Components.SignInContainer>
+              
 
               <Components.OverlayContainer signinIn={signIn}>
                   <Components.Overlay signinIn={signIn}>
@@ -46,7 +65,7 @@
                             Enter Your personal details and start journey with us
                         </Components.Paragraph>
                             <Components.GhostButton onClick={() => toggle(false)}>
-                                Sigin Up
+                                Sigin Up    
                             </Components.GhostButton> 
                       </Components.RightOverlayPanel>
   

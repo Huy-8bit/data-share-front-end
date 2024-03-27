@@ -1,13 +1,18 @@
-export async function register(username, password, email) {
-    const response = await fetch('https://your-api.com/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password, email})
-    });
+export async function register(username, email, password) {
+  const formdata = new FormData();
+  formdata.append("username", username);
+  formdata.append("email", email);
+  formdata.append("password", password);
   
-    const data = await response.json();
-    return data;
-  }
+  const requestOptions = {
+    method: "POST",
+    body: formdata,
+    redirect: "follow"
+  };
+  
+  fetch("http://13.215.184.223/auth/register", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+}
   

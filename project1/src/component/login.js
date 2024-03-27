@@ -1,15 +1,18 @@
 export async function login(username, password) {
-    const response = await fetch('https://your-api.com/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password })
-    });
+  const formdata = new FormData();
+formdata.append("username", username);
+formdata.append("password", password);
+
+const requestOptions = {
+  method: "POST",
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("http://13.215.184.223/auth/login", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+}
   
-    const data = await response.json();
-    return data;
-  }
-  
-  // You can add more API functions here...
   
