@@ -1,7 +1,7 @@
  import React, { useState } from "react";
- import * as Components from './component/Components';
- import { login } from "./component/login";
- import {register} from "./component/register";
+ import * as Components from './components/Components';
+ import { login } from "./api/login";
+ import {register} from "./api/register";
 
  function App() {
         const [signIn, toggle] = React.useState(true);
@@ -13,12 +13,12 @@
         const loginAccount = async (event) => {
             event.preventDefault();
             console.log(username + ' '+password);
-            const data = await login(username, password);
+            login(username, password);
         };
         //
         const registerAccount = async (event) => {
             event.preventDefault();
-            const data = await register(username, email, password);
+            register(username, email, password);
         };
         //
        
